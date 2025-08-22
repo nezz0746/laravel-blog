@@ -39,7 +39,6 @@ Thumbs.db
 # npm
 package-lock.json
 yarn.lock
-pnpm-lock.yaml
 
 # GraphQL generated
 schema.graphql
