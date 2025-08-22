@@ -43,6 +43,15 @@ Route::get('/debug', function () {
     ]);
 });
 
+// Enable debug mode temporarily
+Route::get('/enable-debug', function () {
+    return response()->json([
+        'message' => 'Set APP_DEBUG=true in Railway environment variables to see detailed errors',
+        'current_debug' => config('app.debug'),
+        'instructions' => 'After setting APP_DEBUG=true, redeploy and visit /graphql or /graphiql to see the actual error'
+    ]);
+});
+
 // GraphiQL interface for exploring the GraphQL API
 Route::get('/graphiql', function () {
     return view('graphiql');
