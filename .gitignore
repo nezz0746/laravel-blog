@@ -40,8 +40,8 @@ Thumbs.db
 package-lock.json
 yarn.lock
 
-# GraphQL generated
-schema.graphql
+# GraphQL generated (in packages, not API)
+packages/*/schema.graphql
 
 # Logs
 *.log

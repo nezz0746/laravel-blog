@@ -1,0 +1,147 @@
+scalar DateTime
+    @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+type Query {
+    user(
+        id: ID @eq @rules(apply: ["prohibits:email", "required_without:email"])
+        email: String
+            @eq
+            @rules(apply: ["prohibits:id", "required_without:id", "email"])
+    ): User @find
+
+    users(
+        name: String @where(operator: "like")
+
+        orderBy: _
+            @orderBy(
+                columns: ["id", "name", "email", "created_at", "updated_at"]
+            )
+    ): [User!]! @paginate(defaultCount: 10)
+
+    post("Search by primary key." id: ID @eq @rules(apply: ["required"])): Post
+        @find
+
+    posts(
+        published: Boolean @where
+        user_id: ID @where
+        search: String
+        orderBy: _
+            @orderBy(
+                columns: [
+                    "id"
+                    "title"
+                    "created_at"
+                    "updated_at"
+                    "published"
+                ]
+            )
+    ): [Post!]! @paginate(defaultCount: 10)
+
+    comment(id: ID @eq @rules(apply: ["required"])): Comment @find
+
+    comments(
+        post_id: ID @where
+
+        user_id: ID @where
+
+        orderBy: _ @orderBy(columns: ["id", "created_at", "updated_at"])
+    ): [Comment!]! @paginate(defaultCount: 10)
+}
+
+type Mutation {
+    createPost(input: CreatePostInput! @spread): Post @create
+
+    updatePost(input: UpdatePostInput! @spread): Post @update
+
+    deletePost(id: ID! @whereKey): Post @delete
+
+    createComment(input: CreateCommentInput! @spread): Comment @create
+
+    updateComment(input: UpdateCommentInput! @spread): Comment @update
+
+    deleteComment(id: ID! @whereKey): Comment @delete
+}
+
+type User {
+    id: ID!
+
+    name: String!
+
+    email: String!
+
+    email_verified_at: DateTime
+
+    created_at: DateTime!
+
+    updated_at: DateTime!
+
+    posts: [Post!]! @hasMany
+
+    comments: [Comment!]! @hasMany
+}
+
+type Post {
+    id: ID!
+
+    title: String!
+
+    content: String!
+
+    published: Boolean!
+
+    user: User! @belongsTo
+
+    comments: [Comment!]! @hasMany
+
+    created_at: DateTime!
+
+    updated_at: DateTime!
+}
+
+type Comment {
+    id: ID!
+
+    content: String!
+
+    user: User! @belongsTo
+
+    post: Post! @belongsTo
+
+    created_at: DateTime!
+
+    updated_at: DateTime!
+}
+
+input CreatePostInput {
+    title: String! @rules(apply: ["required", "string", "max:255"])
+
+    content: String! @rules(apply: ["required", "string"])
+
+    user_id: ID! @rules(apply: ["required", "exists:users,id"])
+
+    published: Boolean = false
+}
+
+input UpdatePostInput {
+    id: ID! @rules(apply: ["required", "exists:posts,id"])
+
+    title: String @rules(apply: ["string", "max:255"])
+
+    content: String @rules(apply: ["string"])
+
+    published: Boolean
+}
+
+input CreateCommentInput {
+    content: String! @rules(apply: ["required", "string"])
+
+    user_id: ID! @rules(apply: ["required", "exists:users,id"])
+
+    post_id: ID! @rules(apply: ["required", "exists:posts,id"])
+}
+
+input UpdateCommentInput {
+    id: ID! @rules(apply: ["required", "exists:comments,id"])
+
+    content: String @rules(apply: ["string"])
+}
