@@ -13,6 +13,29 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/posts', function () {
+    // Basic query with relationships
+    $posts = \App\Models\Post::with(['user', 'comments'])->get();
+
+    return response()->json([
+        'data' => $posts,
+        'count' => $posts->count(),
+    ]);
+});
+
+
+
+Route::get('/posts/{id}', function ($id) {
+    // Single post by ID
+    $post = \App\Models\Post::with(['user', 'comments'])->find($id);
+
+    if (!$post) {
+        return response()->json(['error' => 'Post not found'], 404);
+    }
+
+    return response()->json($post);
+});
+
 // Health check endpoint for Railway
 Route::get('/health', function () {
     return response()->json([
