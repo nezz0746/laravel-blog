@@ -13,6 +13,15 @@ Route::get('/', function () {
     ]);
 });
 
+// Health check endpoint for Railway
+Route::get('/health', function () {
+    return response()->json([
+        'status' => 'healthy',
+        'timestamp' => now()->toISOString(),
+        'database' => 'connected'
+    ]);
+});
+
 // GraphiQL interface for exploring the GraphQL API
 Route::get('/graphiql', function () {
     return view('graphiql');
