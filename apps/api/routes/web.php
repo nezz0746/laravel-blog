@@ -22,6 +22,20 @@ Route::get('/health', function () {
     ]);
 });
 
+// Debug endpoint (remove after fixing)
+Route::get('/debug', function () {
+    return response()->json([
+        'app_key_set' => !empty(config('app.key')),
+        'app_env' => config('app.env'),
+        'app_debug' => config('app.debug'),
+        'db_connection' => config('database.default'),
+        'db_file_exists' => file_exists(database_path('database.sqlite')),
+        'lighthouse_installed' => class_exists('Nuwave\\Lighthouse\\GraphQL'),
+        'php_version' => PHP_VERSION,
+        'timestamp' => now()->toISOString(),
+    ]);
+});
+
 // GraphiQL interface for exploring the GraphQL API
 Route::get('/graphiql', function () {
     return view('graphiql');

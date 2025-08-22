@@ -5,8 +5,6 @@
         "buildCommand": "composer install --no-dev --optimize-autoloader && php artisan config:cache && php artisan route:cache"
     },
     "deploy": {
-        "startCommand": "php artisan migrate --force && php artisan db:seed --force && php artisan serve --host=0.0.0.0 --port=$PORT",
-        "healthcheckPath": "/health",
-        "healthcheckTimeout": 100
+        "startCommand": "php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\" && php artisan config:clear && php artisan migrate --force && php artisan db:seed --force && php artisan serve --host=0.0.0.0 --port=$PORT"
     }
 }
