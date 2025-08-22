@@ -42,7 +42,6 @@ yarn.lock
 
 # GraphQL generated
 schema.graphql
-/packages/graphql-sdk/src/generated/
 
 # Logs
 *.log
