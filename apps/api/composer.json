@@ -80,7 +80,8 @@
         "laravel": {
             "dont-discover": [
                 "laravel/pail",
-                "nunomaduro/collision"
+                "nunomaduro/collision",
+                "laravel/sail"
             ]
         }
     },
