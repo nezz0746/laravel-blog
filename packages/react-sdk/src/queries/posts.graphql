@@ -1,0 +1,75 @@
+query GetPosts(
+  $published: Boolean
+  $user_id: ID
+  $search: String
+  $first: Int = 10
+  $page: Int
+  $orderBy: [QueryPostsOrderByOrderByClause!]
+) {
+  posts(
+    published: $published
+    user_id: $user_id
+    search: $search
+    first: $first
+    page: $page
+    orderBy: $orderBy
+  ) {
+    data {
+      id
+      title
+      content
+      published
+      created_at
+      updated_at
+      user {
+        id
+        name
+        email
+      }
+      comments {
+        id
+        content
+        created_at
+        user {
+          id
+          name
+        }
+      }
+    }
+    paginatorInfo {
+      count
+      currentPage
+      hasMorePages
+      lastPage
+      perPage
+      total
+    }
+  }
+}
+
+query GetPost($id: ID!) {
+  post(id: $id) {
+    id
+    title
+    content
+    published
+    created_at
+    updated_at
+    user {
+      id
+      name
+      email
+    }
+    comments {
+      id
+      content
+      created_at
+      updated_at
+      user {
+        id
+        name
+        email
+      }
+    }
+  }
+}

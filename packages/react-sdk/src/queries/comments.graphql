@@ -1,0 +1,66 @@
+query GetComments(
+  $post_id: ID
+  $user_id: ID
+  $first: Int = 10
+  $page: Int
+  $orderBy: [QueryCommentsOrderByOrderByClause!]
+) {
+  comments(
+    post_id: $post_id
+    user_id: $user_id
+    first: $first
+    page: $page
+    orderBy: $orderBy
+  ) {
+    data {
+      id
+      content
+      created_at
+      updated_at
+      user {
+        id
+        name
+        email
+      }
+      post {
+        id
+        title
+        user {
+          id
+          name
+        }
+      }
+    }
+    paginatorInfo {
+      count
+      currentPage
+      hasMorePages
+      lastPage
+      perPage
+      total
+    }
+  }
+}
+
+query GetComment($id: ID!) {
+  comment(id: $id) {
+    id
+    content
+    created_at
+    updated_at
+    user {
+      id
+      name
+      email
+    }
+    post {
+      id
+      title
+      content
+      user {
+        id
+        name
+      }
+    }
+  }
+}

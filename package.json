@@ -1,0 +1,21 @@
+{
+  "name": "graphql-monorepo",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel --filter=!@graphql-monorepo/api",
+    "dev:api": "cd apps/api && php artisan serve --host=0.0.0.0 --port=8000",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "clean": "turbo run clean",
+    "type-check": "turbo run type-check"
+  },
+  "devDependencies": {
+    "turbo": "^1.10.16"
+  },
+  "packageManager": "pnpm@9.0.0"
+}

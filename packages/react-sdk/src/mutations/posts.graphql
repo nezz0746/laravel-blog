@@ -1,0 +1,38 @@
+mutation CreatePost($input: CreatePostInput!) {
+  createPost(input: $input) {
+    id
+    title
+    content
+    published
+    created_at
+    updated_at
+    user {
+      id
+      name
+      email
+    }
+  }
+}
+
+mutation UpdatePost($input: UpdatePostInput!) {
+  updatePost(input: $input) {
+    id
+    title
+    content
+    published
+    created_at
+    updated_at
+    user {
+      id
+      name
+      email
+    }
+  }
+}
+
+mutation DeletePost($id: ID!) {
+  deletePost(id: $id) {
+    id
+    title
+  }
+}

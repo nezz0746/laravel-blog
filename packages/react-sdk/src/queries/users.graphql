@@ -1,0 +1,53 @@
+query GetUsers(
+  $name: String
+  $first: Int = 10
+  $page: Int
+  $orderBy: [QueryUsersOrderByOrderByClause!]
+) {
+  users(name: $name, first: $first, page: $page, orderBy: $orderBy) {
+    data {
+      id
+      name
+      email
+      created_at
+      updated_at
+    }
+    paginatorInfo {
+      count
+      currentPage
+      hasMorePages
+      lastPage
+      perPage
+      total
+    }
+  }
+}
+
+query GetUser($id: ID, $email: String) {
+  user(id: $id, email: $email) {
+    id
+    name
+    email
+    email_verified_at
+    created_at
+    updated_at
+    posts {
+      id
+      title
+      content
+      published
+      created_at
+      updated_at
+    }
+    comments {
+      id
+      content
+      created_at
+      updated_at
+      post {
+        id
+        title
+      }
+    }
+  }
+}

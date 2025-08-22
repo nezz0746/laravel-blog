@@ -1,0 +1,39 @@
+{
+  "name": "@graphql-monorepo/sdk",
+  "version": "1.0.0",
+  "description": "GraphQL SDK with code generation for type-safe API consumption",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "codegen": "graphql-codegen --config codegen.yml",
+    "introspect": "get-graphql-schema http://localhost:8000/graphql > schema.graphql",
+    "generate": "npm run introspect && npm run codegen",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "graphql": "^16.8.1",
+    "graphql-request": "^6.1.0"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/typescript": "^4.0.1",
+    "@graphql-codegen/typescript-graphql-request": "^6.0.1",
+    "@graphql-codegen/typescript-operations": "^4.0.1",
+    "@types/node": "^20.0.0",
+    "get-graphql-schema": "^2.1.2",
+    "typescript": "^5.0.0"
+  },
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "require": "./src/index.ts",
+      "types": "./src/index.ts"
+    }
+  },
+  "publishConfig": {
+    "access": "restricted"
+  }
+}
