@@ -33,6 +33,10 @@ Route::get('/debug', function () {
         'lighthouse_installed' => class_exists('Nuwave\\Lighthouse\\GraphQL'),
         'php_version' => PHP_VERSION,
         'timestamp' => now()->toISOString(),
+        'schema_file_exists' => file_exists(base_path('graphql/schema.graphql')),
+        'lighthouse_config' => config('lighthouse.schema.register'),
+        'graphql_route' => url('/graphql'),
+        'routes_cached' => app()->routesAreCached(),
     ]);
 });
 
