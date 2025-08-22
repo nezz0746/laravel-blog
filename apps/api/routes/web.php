@@ -35,6 +35,9 @@ Route::get('/debug', function () {
         'timestamp' => now()->toISOString(),
         'schema_file_exists' => file_exists(base_path('graphql/schema.graphql')),
         'lighthouse_config' => config('lighthouse.schema.register'),
+        'lighthouse_schema_path' => config('lighthouse.schema.register'),
+        'lighthouse_route_name' => config('lighthouse.route.name'),
+        'lighthouse_route_uri' => config('lighthouse.route.uri'),
         'graphql_route' => url('/graphql'),
         'routes_cached' => app()->routesAreCached(),
     ]);
