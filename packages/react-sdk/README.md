@@ -413,3 +413,4 @@ data?.posts.data?.forEach((post) => {
   // console.log(post.invalid); // ❌ TypeScript error
 });
 ```
+

@@ -6,6 +6,7 @@ import {
   defaultDataSource,
 } from "@graphql-monorepo/react-sdk";
 import Link from "next/link";
+import { CommentForm } from "@/components/CommentForm";
 
 export default function PostPage() {
   const params = useParams();
@@ -176,17 +177,28 @@ export default function PostPage() {
       </article>
 
       {/* Comments Section */}
-      {post.comments.length > 0 && (
-        <section className="border-t border-gray-200 pt-12">
-          <h3 className="text-2xl font-medium font-work-sans text-gray-900 mb-8">
+      <section className="border-t border-gray-200 pt-12">
+        <div className="mb-8">
+          <h3 className="text-2xl font-medium font-work-sans text-gray-900 mb-2">
             Comments ({post.comments.length})
           </h3>
+          <p className="text-gray-600 font-crimson">
+            Join the conversation and share your thoughts
+          </p>
+        </div>
 
+        {/* Comment Form */}
+        <div className="mb-8">
+          <CommentForm postId={postId} />
+        </div>
+
+        {/* Existing Comments */}
+        {post.comments.length > 0 && (
           <div className="space-y-6">
             {post.comments.map((comment) => (
               <div
                 key={comment.id}
-                className="bg-gray-50 rounded-xl p-6 border border-gray-100"
+                className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm"
               >
                 <div className="flex items-center mb-4">
                   <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mr-3">
@@ -219,8 +231,20 @@ export default function PostPage() {
               </div>
             ))}
           </div>
-        </section>
-      )}
+        )}
+
+        {/* No Comments Message */}
+        {post.comments.length === 0 && (
+          <div className="text-center py-8">
+            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl">💬</span>
+            </div>
+            <p className="text-gray-500 font-crimson">
+              No comments yet. Be the first to share your thoughts!
+            </p>
+          </div>
+        )}
+      </section>
 
       {/* Related Actions */}
       <div className="mt-12 pt-8 border-t border-gray-200">
